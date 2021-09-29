@@ -1,107 +1,101 @@
 // PSUEDO CODING start
 
-// create array with all time blocks so you can write each
-// make an object for each hour
+// create array with all descriptions in it for each hour
+// write function to go through each row in container and grab text-areas
 
 // PSUEDO CODING end
 
 // selectors
+var containerOfButtons = $("#container .row");
+console.log(containerOfButtons);
 
 // variables
-var weeklyCalendar;
-
-var hourBlocks = [
-  // array of 9 hours on calendar
-  "9am",
-  "10am",
-  "11am",
-  "12pm",
-  "1pm",
-  "2pm",
-  "3pm",
-  "4pm",
-  "5pm",
-];
+// var weeklyCalendar;
 
 // functions
 function start() {
   pullWeeklyCalendar();
+  buttonDelegation();
 }
 
 function pullWeeklyCalendar() {
   weeklyCalendar = JSON.parse(localStorage.getItem("weeklyCalendar"));
   if (weeklyCalendar) {
+    // console.log("weeklyCalendar exists - writeWeeklyCalendar was entered");
     writeWeeklyCalendar();
   } else {
+    // console.log(
+    //   "weeklyCalendar does not exist - createEmptyCalendar was entered"
+    // );
     createEmptyCalendar();
   }
 }
 
 function createEmptyCalendar() {
-  weeklyCalendar = [
-    {
-      hour: hourBlocks[0],
-      message: "",
-      saveBtn: true,
-    },
-    {
-      hour: hourBlocks[1],
-      message: "",
-      saveBtn: true,
-    },
-    {
-      hour: hourBlocks[2],
-      message: "",
-      saveBtn: true,
-    },
-    {
-      hour: hourBlocks[3],
-      message: "",
-      saveBtn: true,
-    },
-    {
-      hour: hourBlocks[4],
-      message: "",
-      saveBtn: true,
-    },
-    {
-      hour: hourBlocks[5],
-      message: "",
-      saveBtn: true,
-    },
-    {
-      hour: hourBlocks[6],
-      message: "",
-      saveBtn: true,
-    },
-    {
-      hour: hourBlocks[7],
-      message: "",
-      saveBtn: true,
-    },
-    {
-      hour: hourBlocks[8],
-      message: "",
-      saveBtn: true,
-    },
-  ];
+  weeklyCalendar = ["", "", "", "", "", "", "", "", ""];
+  // weeklyCalendar = [
+  //   { id: "9", value: "" },
+  //   { id: "10", value: "" },
+  //   { id: "11", value: "" },
+  //   { id: "12", value: "" },
+  //   { id: "13", value: "" },
+  //   { id: "14", value: "" },
+  //   { id: "15", value: "" },
+  //   { id: "16", value: "" },
+  //   { id: "17", value: "" },
+  // ];
   pushWeeklyCalendar();
   writeWeeklyCalendar();
 }
 
-function pushWeeklyCalendar() {
-  console.log("pushWeeklyCalendar() entered");
+function pushWeeklyCalendar(id, value) {
+  // update weeklyCalendar object
+  id = id - 9;
+  console.log(id);
+  console.log(value);
+  weeklyCalendar[id] = value;
+  console.log(weeklyCalendar[id]);
+
   localStorage.setItem("weeklyCalendar", JSON.stringify(weeklyCalendar));
 }
 
 function writeWeeklyCalendar() {
   console.log("writeWeeklyCalendar() entered");
-  $.each(weeklyCalendar, function () {
-    console.log("hour of day");
+
+  $(containerOfButtons).each(function (index) {
+    // console.log("weeklyCalendar now = " + weeklyCalendar[index]);
+    var textValueInArray = weeklyCalendar[index];
+    // selector foer text area
+    $(this).children().find("textarea").val(textValueInArray);
+    // .val(textValueInArray);
+    // .siblings()
+    // .find("textarea")
+    // .text(textValueInArray);
+    // textValueOnPage = textValueInArray;
+    // console.log("index = " + index);
+    console.log("textValueInArray = " + textValueInArray);
+    // console.log("textValueOnPage = " + textValueOnPage);
+  });
+
+  // $.each(weeklyCalendar, function () {
+  //   console.log("hour of day");
+  // });
+}
+
+function buttonDelegation() {
+  // console.log("buttonDelegation() entered");
+  console.log(containerOfButtons);
+  containerOfButtons.on("click", ".saveBtn", function (event) {
+    event.preventDefault();
+    var id = $(this).parent().prop("id");
+    var value = $(this).parent().find("textarea").val();
+    // console.log("textvalue is " + value);
+    // console.log("parent ID is " + keyValue);
+    // console.log("button detected");
+    pushWeeklyCalendar(id, value);
   });
 }
 
 // getToWork
-console.log(hourBlocks);
 
 start();
