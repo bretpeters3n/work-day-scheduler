@@ -7,10 +7,9 @@
 
 // selectors
 var containerOfButtons = $("#container .row");
-console.log(containerOfButtons);
 
 // variables
-// var weeklyCalendar;
+var nowMoment = moment().format("HH"); // this var is equal to the current hour in military time
 
 // functions
 function start() {
@@ -33,17 +32,6 @@ function pullWeeklyCalendar() {
 
 function createEmptyCalendar() {
   weeklyCalendar = ["", "", "", "", "", "", "", "", ""];
-  // weeklyCalendar = [
-  //   { id: "9", value: "" },
-  //   { id: "10", value: "" },
-  //   { id: "11", value: "" },
-  //   { id: "12", value: "" },
-  //   { id: "13", value: "" },
-  //   { id: "14", value: "" },
-  //   { id: "15", value: "" },
-  //   { id: "16", value: "" },
-  //   { id: "17", value: "" },
-  // ];
   pushWeeklyCalendar();
   writeWeeklyCalendar();
 }
@@ -59,27 +47,32 @@ function pushWeeklyCalendar(id, value) {
   localStorage.setItem("weeklyCalendar", JSON.stringify(weeklyCalendar));
 }
 
+// write all textareas, that have been saved, to the page
 function writeWeeklyCalendar() {
-  console.log("writeWeeklyCalendar() entered");
-
+  var id;
+  var num = 1;
+  // roll through array of targets and build textareas on page
   $(containerOfButtons).each(function (index) {
-    // console.log("weeklyCalendar now = " + weeklyCalendar[index]);
+    // transfer array value to variable
     var textValueInArray = weeklyCalendar[index];
-    // selector foer text area
-    $(this).children().find("textarea").val(textValueInArray);
-    // .val(textValueInArray);
-    // .siblings()
-    // .find("textarea")
-    // .text(textValueInArray);
-    // textValueOnPage = textValueInArray;
-    // console.log("index = " + index);
-    console.log("textValueInArray = " + textValueInArray);
-    // console.log("textValueOnPage = " + textValueOnPage);
+    //
+    var pastPresentFuture;
+    //
+    var textAreaStyle = $(this).children().find("textarea");
+    time = this.id;
+    console.log("nowMoment = " + nowMoment);
+    console.log("id = " + time);
+    if (time === nowMoment) {
+      textAreaStyle.addClass("present");
+    } else if (time > nowMoment) {
+      textAreaStyle.addClass("future");
+    } else {
+      textAreaStyle.addClass("past");
+    }
+    // set textarea to array value from above
+    // $(this).children().find("textarea").addClass("past").val(textValueInArray);
+    textAreaStyle.val(textValueInArray);
   });
-
-  // $.each(weeklyCalendar, function () {
-  //   console.log("hour of day");
-  // });
 }
 
 function buttonDelegation() {
@@ -89,13 +82,10 @@ function buttonDelegation() {
     event.preventDefault();
     var id = $(this).parent().prop("id");
     var value = $(this).parent().find("textarea").val();
-    // console.log("textvalue is " + value);
-    // console.log("parent ID is " + keyValue);
-    // console.log("button detected");
+
     pushWeeklyCalendar(id, value);
   });
 }
 
-// getToWork
-
+// getToWork code
 start();
