@@ -12,11 +12,6 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 -->
 
-<img src="https://img.shields.io/badge/HTML-orange"/>
-<img src="https://img.shields.io/badge/CSS-yellow"/>
-<img src="https://img.shields.io/badge/Javascript-green"/>
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -27,6 +22,11 @@
   -->
 
 <h2 align="center">Work Day Scheduler</h2>
+  <p align="center">
+    <img src="https://img.shields.io/badge/HTML-orange"/>
+    <img src="https://img.shields.io/badge/CSS-yellow"/>
+    <img src="https://img.shields.io/badge/Javascript-green"/>
+  </p>
   <p align="center">
     This project included making a daily calendar for a user to organize their day by the hour. 
     <br />
@@ -120,7 +120,7 @@ N/A
 ### Installation
 1. Clone the repo
    ```sh
-   git clone https://github.com/bretpeters3n/code-quiz.git
+   git clone https://github.com/bretpeters3n/work-day-scheduler.git
    ```
 2. Open the `index.html` file in your favorite web browser.
 
